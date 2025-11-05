@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Fishing Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1a1818;
+            --bg-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%233a3535" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            --panel-bg: rgba(74, 68, 65, 0.5);
+            --inset-bg: rgba(42, 38, 39, 0.5);
+        }
+        body {
+            font-family: 'Yuji Syuku', serif;
+            background-color: var(--bg-color);
+            background-image: var(--bg-image);
+            transition: background-color 0.8s ease;
+        }
+        .theme-night {
+            --bg-color: #0c0a1a;
+            --bg-image: url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%232a2535" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');
+            --panel-bg: rgba(40, 38, 52, 0.6);
+            --inset-bg: rgba(22, 20, 30, 0.6);
+        }
+        .bg-panel {
+            background-color: var(--panel-bg);
+            transition: background-color 0.8s ease;
+        }
+        .bg-inset {
+            background-color: var(--inset-bg);
+            transition: background-color 0.8s ease;
+        }
+        .text-shadow-lg {
+            text-shadow: 0 0 8px rgba(224, 183, 132, 0.4), 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+        .tab-content {
+          scrollbar-width: thin;
+          scrollbar-color: #816b5a #4a4441;
+        }
+        .tab-content::-webkit-scrollbar { width: 8px; }
+        .tab-content::-webkit-scrollbar-track { background: #4a4441; border-radius: 10px; }
+        .tab-content::-webkit-scrollbar-thumb { background: #816b5a; border-radius: 10px; }
+        .tab-content::-webkit-scrollbar-thumb:hover { background: #9e846f; }
+        .modal-panel {
+            background: rgba(42, 38, 39, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 2px solid #816b5a;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        @keyframes wave-bg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-water {
+            background: linear-gradient(135deg, #4f6b7c, #8fa7b6, #6c8ca0, #5c798e);
+            background-size: 400% 400%;
+            animation: wave-bg 20s ease infinite;
+        }
+        .theme-night .animated-water {
+            background: linear-gradient(135deg, #1f2937, #374151, #2d3748, #4a5568);
+            background-size: 400% 400%;
+            animation: wave-bg 25s ease infinite;
+        }
+        .rarity-border-common { border-color: rgba(172, 166, 157, 0.5); }
+        .rarity-border-uncommon { border-color: rgba(132, 204, 22, 0.6); }
+        .rarity-border-rare { border-color: rgba(56, 189, 248, 0.6); }
+        .rarity-border-epic { border-color: rgba(192, 132, 252, 0.6); }
+        .rarity-border-legendary { border-color: rgba(251, 191, 36, 0.7); }
+        .rarity-border-mythic { border-color: rgba(244, 114, 182, 0.7); }
+        .rarity-border-secret { border-color: rgba(45, 212, 191, 0.7); }
+        .rarity-border-mysterious { border-color: rgba(129, 140, 248, 0.7); }
+        .rarity-border-anonymous { border-color: rgba(148, 163, 184, 0.7); }
+        .rarity-border-dev { border-color: rgba(252, 211, 77, 0.8); }
+        .rarity-border-executors { border-color: rgba(239, 68, 68, 0.9); }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-[#0c0a1a]">
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
