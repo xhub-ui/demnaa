@@ -1,4 +1,3 @@
-
 export type Rarity = "common" | "uncommon" | "rare" | "epic" | "legendary" | "mythic" | "secret" | "mysterious" | "anonymous" | "dev" | "executors";
 
 export type Mutation = "corrupt" | "galaxy" | "gemstone" | "ghost" | "lightning" | "fairy-dust" | "midnight" | "radioactive" | "stone" | "festive" | "frozen";
@@ -124,7 +123,6 @@ export interface PlayerState {
     };
 }
 
-// FIX: Add 'password' to User interface to support authentication logic.
 export interface User {
     username: string;
     password: string;

@@ -1552,8 +1552,9 @@ export default function App() {
                 return true; // Disabled for 'casting', 'waiting', 'caught', 'escaped'
         }
     }, [isAutoFishing, fishingPhase]);
-// FIX: The logic for disabling the auto-fish toggle was complex and could lead to a TypeScript type comparison error where the type of `fishingPhase` was incorrectly narrowed.
-// Replacing the logic with a clear switch statement resolves this potential issue by making the control flow explicit for the type checker.
+    // FIX: Refactored to use a switch statement for `isAutoFishToggleDisabled` to avoid a TypeScript
+    // type narrowing issue that caused a comparison error. The switch statement makes the control flow
+    // explicit and resolves the problem.
     const isAutoFishToggleDisabled = useMemo(() => {
         // The toggle can always be turned off.
         if (isAutoFishing) {
@@ -1921,22 +1922,22 @@ export default function App() {
                                 <span className={`ml-2 text-sm font-semibold transition-colors ${animationMode === 'simple' ? 'text-white' : 'text-stone-500'}`}>Sederhana</span>
                             </div>
                         </div>
-                        <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
-                             <button
-                                onClick={handleManualSave}
-                                disabled={!user}
-                                className="w-full py-2 bg-teal-800 hover:bg-teal-700 rounded font-bold transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
-                            >
-                                Simpan Data Game
-                            </button>
-                            <button
-                                onClick={handleManualLoad}
-                                disabled={!user}
-                                className="w-full py-2 bg-sky-800 hover:bg-sky-700 rounded font-bold transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
-                            >
-                                Muat Data Game
-                            </button>
-                        </div>
+                        {user && (
+                            <div className="mt-4 pt-4 border-t border-white/10 space-y-2">
+                                <button
+                                    onClick={handleManualSave}
+                                    className="w-full py-2 bg-teal-800 hover:bg-teal-700 rounded font-bold transition-colors"
+                                >
+                                    Simpan Data Game
+                                </button>
+                                <button
+                                    onClick={handleManualLoad}
+                                    className="w-full py-2 bg-sky-800 hover:bg-sky-700 rounded font-bold transition-colors"
+                                >
+                                    Muat Data Game
+                                </button>
+                            </div>
+                        )}
                         <button onClick={() => setIsSettingsModalOpen(false)} className="mt-6 w-full py-2 bg-gray-600 hover:bg-gray-700 rounded transition-colors">Tutup</button>
                     </div>
                 </div>
